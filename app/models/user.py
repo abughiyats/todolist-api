@@ -7,8 +7,8 @@ class User(db.Model):
   name = db.Column(db.String(30), nullable=False)
   email = db.Column(db.String(30), nullable=False, index=True, unique=True)
   password = db.Column(db.String(255), nullable=False)
-  created_at = db.Column(db.DateTime(30), default=datetime.utcnow)
-  updated_at = db.Column(db.DateTime(30), default=datetime.utcnow)
+  created_at = db.Column(db.DateTime, default=datetime.utcnow)
+  updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
   def __repr__(self):
     return '<User {}>'.format(self.name)
