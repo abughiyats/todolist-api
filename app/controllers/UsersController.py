@@ -4,12 +4,38 @@ from flask import request
 from flask_jwt_extended import *
 import datetime
 
-def model_user(data):
+def index():
+  try:
+    users = User.query.all()
+    data = allUser(users)
+    return response.success(data, "success")
+
+  except Exception as e:
+    print(e)
+
+def allUser(users):
+  array = []
+
+  for i in users:
+    array.append(singleUser(i))
+  return array
+
+def singleUser(users, withProject=True):
   data = {
-    'id' : data.id,
-    'name' : data.name,
-    'email' : data.email
+    'id' : users.id,
+    'name' : users.name,
+    'email' : users.email
   }
+  if withProject:
+    projects = []
+    for i in users.projects:
+      projects.append({
+        'id': i.id,
+        'name': i.name,
+        'description': i.description,
+        'due_date': i.due_date,
+      })
+    data['projects'] = projects
   return data
 
 def registration():

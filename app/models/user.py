@@ -9,6 +9,7 @@ class User(db.Model):
   password = db.Column(db.String(255), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+  projects = db.relationship("Project", lazy='select', backref=db.backref('project', lazy='joined'))
 
   def __repr__(self):
     return '<User {}>'.format(self.name)
