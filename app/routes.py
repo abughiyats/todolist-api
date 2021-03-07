@@ -16,18 +16,22 @@ def check_if_token_revoked(jwt_header, jwt_payload):
 def index():
   return "hello world!"
 
+# api register
 @app.route('/register', methods=['POST'])
 def auth_register():
   return UsersController.registration()
 
+# api login
 @app.route('/login', methods=['POST'])
 def auth_login():
   return UsersController.login()
 
+# api get List of users
 @app.route('/users', methods=['GET'])
 def users():
   return UsersController.index()
 
+# api Lists of projects by user & Create project
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
   if request.method == 'GET':
@@ -35,6 +39,7 @@ def projects():
   else:
     return ProjectsController.store()
 
+# api Get Project by Id, Update project & Delete project
 @app.route('/project/<id>', methods=['GET', 'PUT', 'DELETE'])
 def project(id):
   if request.method == 'GET':
@@ -44,6 +49,7 @@ def project(id):
   elif request.method == 'DELETE':
     return ProjectsController.delete(id)
 
+# api List of Tasks & Create Tasks
 @app.route('/tasks', methods=['GET', 'POST'])
 def tasks():
   if request.method == 'GET':
@@ -51,6 +57,7 @@ def tasks():
   else:
     return TasksController.store()
 
+# api Update Tasks & Delete Tasks
 @app.route('/task/<id>', methods=['PUT', 'DELETE'])
 def task(id):
   if request.method == 'PUT':
@@ -58,14 +65,17 @@ def task(id):
   else:
     return TasksController.delete(id)
 
-@app.route('/logout_access', methods=['DELETE'])
+# api Sign out user
+@app.route('/logout/access', methods=['DELETE'])
 def logout_access():
     return RevokeTokensController.userLogoutAccess()
 
-@app.route('/logout_refresh', methods=['DELETE'])
+# api Sign out refresh token
+@app.route('/logout/refresh', methods=['DELETE'])
 def logout_refresh():
     return RevokeTokensController.userLogoutRefresh()
 
-@app.route('/token_refresh', methods=['DELETE'])
+# api refresh token
+@app.route('/token/refresh', methods=['DELETE'])
 def token_refresh():
     return RevokeTokensController.tokenRefresh()

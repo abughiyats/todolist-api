@@ -10,14 +10,13 @@ def index():
   try:
     id = get_jwt_identity()['id']
     projects = Project.query.filter_by(user_id=id).all()
-    # projects = Project.query.all()
-    data = allProject(projects)
+    data = projectList(projects)
     return response.success(data, "success")
 
   except Exception as e:
     print(e)
 
-def allProject(projects):
+def projectList(projects):
   array = []
 
   for i in projects:

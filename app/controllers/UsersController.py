@@ -7,13 +7,13 @@ import datetime
 def index():
   try:
     users = User.query.all()
-    data = allUser(users)
+    data = userList(users)
     return response.success(data, "success")
 
   except Exception as e:
     print(e)
 
-def allUser(users):
+def userList(users):
   array = []
 
   for i in users:
@@ -28,7 +28,7 @@ def singleUser(user, withProject=True):
   }
   if withProject:
     projects = []
-    for i in users.projects:
+    for i in user.projects:
       projects.append({
         'id': i.id,
         'name': i.name,
