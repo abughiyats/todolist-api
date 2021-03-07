@@ -9,6 +9,9 @@ class Config(object):
   DB = str(os.environ.get("DB_DATABASE"))
 
   JWT_SECRET_KEY = str(os.environ.get("SECRET_KEY"))
+  JWT_BLACKLIST_ENABLED = True
+  JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+  
 
   SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://' + USERNAME + ':' + PASSWORD + '@' + HOST + '/' + DB
   SQLALCHEMY_TRACK_MODIFICATIONS = False

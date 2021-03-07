@@ -1,6 +1,16 @@
-from app import app
-from app.controllers import UsersController, ProjectsController, TasksController
+from app import app, db
 from flask import request
+from app.models.revokedToken import RevokedToken
+from app.controllers import UsersController, ProjectsController, TasksController, RevokeTokensController
+from flask_jwt_extended import *
+
+jwt = JWTManager(app)
+
+@jwt.token_in_blocklist_loader
+def check_if_token_revoked(jwt_header, jwt_payload):
+    jti = jwt_payload["jti"]
+    token = db.session.query(RevokedToken.id).filter_by(jti=jti).scalar()
+    return token is not None
 
 @app.route('/')
 def index():
@@ -47,3 +57,15 @@ def task(id):
     return TasksController.update(id)
   else:
     return TasksController.delete(id)
+
+@app.route('/logout/access', methods=['DELETE'])
+def logout_access():
+    return RevokeTokensController.userLogoutAccess()
+
+@app.route('/logout/refresh', methods=['DELETE'])
+def logout_refresh():
+    return RevokeTokensController.userLogoutRefresh()
+
+@app.route('/token/refresh', methods=['DELETE'])
+def token_refresh():
+    return RevokeTokensController.tokenRefresh()

@@ -20,11 +20,11 @@ def allUser(users):
     array.append(singleUser(i))
   return array
 
-def singleUser(users, withProject=True):
+def singleUser(user, withProject=True):
   data = {
-    'id' : users.id,
-    'name' : users.name,
-    'email' : users.email
+    'id' : user.id,
+    'name' : user.name,
+    'email' : user.email
   }
   if withProject:
     projects = []
@@ -66,9 +66,9 @@ def login():
     if not user.checkPassword(password):
       return response.badRequest([], 'wrong password')
 
-    data = model_user(user)
-    expires = datetime.timedelta(hours=1)
-    expires_refresh = datetime.timedelta(hours=3)
+    data = singleUser(user, withProject=False)
+    expires = datetime.timedelta(days=1)
+    expires_refresh = datetime.timedelta(days=3)
     access_token = create_access_token(data, fresh=True, expires_delta=expires)
     refresh_token = create_refresh_token(data, expires_delta=expires_refresh)
 

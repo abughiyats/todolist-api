@@ -3,10 +3,14 @@ from app.models.task import Task
 from app.models.project import Project
 from app import response, app, db
 from flask import request
+from flask_jwt_extended import *
 
+@jwt_required()
 def index():
   try:
-    projects = Project.query.all()
+    id = get_jwt_identity()['id']
+    projects = Project.query.filter_by(user_id=id).all()
+    # projects = Project.query.all()
     data = allProject(projects)
     return response.success(data, "success")
 
@@ -33,6 +37,7 @@ def singleProject(data):
 
   return data
 
+@jwt_required()
 def show(id):
   try:
     project = Project.query.filter_by(id=id).first()
@@ -72,6 +77,7 @@ def allTask(data):
     array.append(singleTask(i))
   return array
 
+@jwt_required()
 def store():
   try:
     name = request.form.get('name')
@@ -86,6 +92,7 @@ def store():
   except Exception as e:
     print(e)
 
+@jwt_required()
 def update(id):
   try:
     name = request.form.get('name')
@@ -111,6 +118,7 @@ def update(id):
   except Exception as e:
     print(e)
 
+@jwt_required()
 def delete(id):
   try:
     project = Project.query.filter_by(id=id).first()

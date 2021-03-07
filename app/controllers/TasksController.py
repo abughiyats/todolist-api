@@ -2,7 +2,9 @@ from app.models.task import Task
 from app.models.project import Project
 from app import response, app, db
 from flask import request
+from flask_jwt_extended import *
 
+@jwt_required()
 def index():
   try:
     tasks = Task.query.all()
@@ -70,7 +72,7 @@ def singleTask(data):
 #     array.append(singleTask(i))
 #   return array
 
-
+@jwt_required()
 def store():
   try:
     project_id = request.form.get('project_id')
@@ -86,6 +88,7 @@ def store():
   except Exception as e:
     print(e)
 
+@jwt_required()
 def update(id):
   try:
     project_id = request.form.get('project_id')
@@ -114,6 +117,7 @@ def update(id):
   except Exception as e:
     print(e)
 
+@jwt_required()
 def delete(id):
   try:
     task = Task.query.filter_by(id=id).first()
