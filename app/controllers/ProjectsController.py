@@ -83,8 +83,9 @@ def store():
     name = request.form.get('name')
     description = request.form.get('description')
     due_date = request.form.get('due_date')
+    user_id = request.form.get('user_id')
 
-    project = Project(name=name, description=description, due_date=due_date)
+    project = Project(name=name, description=description, due_date=due_date, user_id=user_id)
     db.session.add(project)
     db.session.commit()
     return response.success('', 'Project successfully created')

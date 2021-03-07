@@ -11,7 +11,7 @@ def userLogoutAccess():
     revoked_token = RevokedToken(jti=jti)
     db.session.add(revoked_token)
     db.session.commit()
-    return response.success('Logout', 'Access token has been revoked')
+    return response.success('Logout', 'User has been Logged Out')
 
   except Exception as e:
     print(e)

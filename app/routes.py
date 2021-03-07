@@ -58,14 +58,14 @@ def task(id):
   else:
     return TasksController.delete(id)
 
-@app.route('/logout/access', methods=['DELETE'])
+@app.route('/logout_access', methods=['DELETE'])
 def logout_access():
     return RevokeTokensController.userLogoutAccess()
 
-@app.route('/logout/refresh', methods=['DELETE'])
+@app.route('/logout_refresh', methods=['DELETE'])
 def logout_refresh():
     return RevokeTokensController.userLogoutRefresh()
 
-@app.route('/token/refresh', methods=['DELETE'])
+@app.route('/token_refresh', methods=['DELETE'])
 def token_refresh():
     return RevokeTokensController.tokenRefresh()

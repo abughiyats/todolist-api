@@ -32,46 +32,6 @@ def singleTask(data):
   }
   return data
 
-# def show(id):
-#   try:
-#     task = Task.query.filter_by(id=id).first()
-#     project = Project.query.filter_by(id=id).first()
-#     task_project = Task.query.filter(Task.project_id == id)
-
-#     if not project:
-#       return response.badRequest([], 'Unavailable data project')
-  
-#     dataTask = allTask(task_project)
-#     data = detailProject(project, dataTask)
-#     return response.success(data, "success")
-#   except Exception as e:
-#     print(e)
-
-# def detailProject(project, dataTask):
-#   data = {
-#     'id' : project.id,
-#     'name' : project.name,
-#     'description' : project.description,
-#     'due_date' : project.due_date,
-#     'task' : dataTask
-#   }
-#   return data
-
-# def singleTask(tasks):
-#   data = {
-#     'id': tasks.id,
-#     'name': tasks.name,
-#     'description': tasks.description,
-#     'due_date': tasks.due_date
-#   }
-#   return data
-
-# def allTask(data):
-#   array = []
-#   for i in data:
-#     array.append(singleTask(i))
-#   return array
-
 @jwt_required()
 def store():
   try:
